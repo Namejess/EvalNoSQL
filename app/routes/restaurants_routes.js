@@ -3,19 +3,22 @@ module.exports = app => {
     var router = require("express").Router();
 
     // Create a new Restaurant
-    router.post("/", restaurants.createRestaurant);
+    router.post("/", restaurants.create);
 
     // Retrieve all Restaurants
-    router.get("/", restaurants.getRestaurants);
+    router.get("/", restaurants.findAll);
 
     // Retrieve a single Restaurant with id
-    router.get("/:id", restaurants.getRestaurantById);
+    router.get("/:id", restaurants.findOne);
 
     // Update a Restaurant with id
-    router.put("/:id", restaurants.updateRestaurant);
+    router.put("/:id", restaurants.update);
 
-    // // Delete a Restaurant with id
-    // router.delete("/:id", restaurants.deleteRestaurant);
+    // Delete a Restaurant with id
+    router.delete("/:id", restaurants.delete);
 
-    app.use("/restaurants", router);
+    // Delete all Restaurants
+    router.delete("/", restaurants.deleteAll);
+
+    app.use("/api/restaurants", router);
 };

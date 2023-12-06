@@ -1,18 +1,22 @@
 const db = require("../models");
 const Restaurant = db.restaurants;
 
-exports.createRestaurant = (req, res) => {
+// Create and Save a new Restaurant
+exports.create = (req, res) => {
+    // Validate request
     if (!req.body.name) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
     }
 
+    // Create a Restaurant
     const restaurant = new Restaurant({
         name: req.body.name,
         address: req.body.address,
         city: req.body.city
     });
 
+    // Save Restaurant in the database
     restaurant
         .save(restaurant)
         .then(data => {
@@ -26,24 +30,8 @@ exports.createRestaurant = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Restaurants from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-
-    Tutorial.find(condition)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving tutorials."
-            });
-        });
-};
-
-exports.getRestaurants = (req, res) => {
     const name = req.query.name;
     var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
 
@@ -59,7 +47,8 @@ exports.getRestaurants = (req, res) => {
         });
 };
 
-exports.getRestaurantById = (req, res) => {
+// Find a single Restaurant with an id
+exports.findOne = (req, res) => {
     const id = req.params.id;
 
     Restaurant.findById(id)
@@ -75,7 +64,8 @@ exports.getRestaurantById = (req, res) => {
         });
 };
 
-exports.updateRestaurant = (req, res) => {
+// Update a Restaurant by the id in the request
+exports.update = (req, res) => {
     if (!req.body) {
         return res.status(400).send({
             message: "Data to update can not be empty!"
@@ -95,6 +85,45 @@ exports.updateRestaurant = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message: "Error updating Restaurant with id=" + id
+            });
+        });
+};
+
+exports.deleteAll = (req, res) => {
+    // Delete all Restaurants from the database.
+    Restaurant.deleteMany({})
+        .then(data => {
+            res.send({
+                message: `${data.deletedCount} Restaurants were deleted successfully!`
+            });
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while removing all restaurants."
+            });
+        });
+};
+
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Restaurant.findByIdAndDelete(id)
+        .then(data => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot delete Restaurant with id=${id}. Maybe Restaurant was not found!`
+                });
+            } else {
+                res.send({
+                    message: "Restaurant was deleted successfully!"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Restaurant with id=" + id
             });
         });
 };
