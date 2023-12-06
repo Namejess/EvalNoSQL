@@ -1,3 +1,9 @@
+/**
+ * @Author: Jessy DROUIN
+ * @Date:   06-Nov-2023
+ * @Project: Evaluation NoSQL
+ */
+
 module.exports = mongoose => {
     var schema = mongoose.Schema(
         {

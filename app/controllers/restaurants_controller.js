@@ -1,7 +1,15 @@
+/**
+ * @Author: Jessy DROUIN
+ * @Date:   06-Nov-2023
+ * @Project: Evaluation NoSQL
+ */
+
 const db = require("../models");
 const Restaurant = db.restaurants;
 
-// Create and Save a new Restaurant
+//===========================================================================
+// POST/CREATE RESTAURANT
+//===========================================================================
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.name) {
@@ -30,7 +38,9 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Restaurants from the database.
+//===========================================================================
+// GET ALL
+//===========================================================================
 exports.findAll = (req, res) => {
     const name = req.query.name;
     var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
@@ -47,7 +57,9 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single Restaurant with an id
+//===========================================================================
+// GET BY ID
+//===========================================================================
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -64,7 +76,9 @@ exports.findOne = (req, res) => {
         });
 };
 
-// Update a Restaurant by the id in the request
+//===========================================================================
+// UPDATE
+//===========================================================================
 exports.update = (req, res) => {
     if (!req.body) {
         return res.status(400).send({
@@ -89,6 +103,9 @@ exports.update = (req, res) => {
         });
 };
 
+//===========================================================================
+// DELETE ALL
+//===========================================================================
 exports.deleteAll = (req, res) => {
     // Delete all Restaurants from the database.
     Restaurant.deleteMany({})
@@ -105,7 +122,9 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-
+//===========================================================================
+// DELETE BY ID
+//===========================================================================
 exports.delete = (req, res) => {
     const id = req.params.id;
 
