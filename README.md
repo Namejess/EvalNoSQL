@@ -3,7 +3,7 @@
 # Partie 1
 Pour la partie 1, le fichier "nosql_commands.md" contient les commandes mongoDB pour répondre aux questions.
 
-# Partie 2
+# Partie 2
 
 ## Postman
 Je t'ai mis à la racine le fichier "Evaluation NoSQL.postman_collection.json" qui contient les requêtes postman pour tester les routes de l'API.
